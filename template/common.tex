@@ -1,0 +1,111 @@
+\usepackage{amsmath,amsthm,amssymb,amsfonts}
+\usepackage{mathtools,marvosym}
+\usepackage{soul}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{xparse, xspace}
+\usepackage{graphicx}
+
+\makeatletter
+% set theory
+\renewcommand{\subset}{\subseteq}
+\renewcommand{\supset}{\supseteq}
+\renewcommand{\complement}{^{\mathsf{c}}}
+\renewcommand{\emptyset}{\varnothing}
+\renewcommand{\subsetneq}{\subsetneqq}
+\newcommand{\cross}{\times}
+
+% probability
+\DeclareMathOperator{\Bin}{Bin}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\E}{E}
+\DeclareMathOperator{\Var}{Var}
+
+\newcommand{\ie}{i.e.\ }
+\renewcommand{\ae}{a.e.\ }
+\newcommand{\finish}{\begin{center}\textbf{FINISH}\end{center}}
+
+% algebra
+\newcommand{\ideal}{\triangleleft}
+\newcommand{\surject}{\twoheadrightarrow}
+\newcommand{\inject}{\hookrightarrow}
+\newcommand{\isom}{\cong}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclarePairedDelimiter\groupgen{\langle}{\rangle}
+
+% common sets
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\I}{\mathbb{I}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\divides}{\mid}
+\newcommand{\notdivides}{\nmid}
+\newcommand{\inv}{^{-1}}
+\newcommand{\ep}{\varepsilon}
+\newcommand{\stext}[1]{\quad \text{#1} \quad}
+\newcommand{\setcompl}[1][\R]{#1 \setminus}
+\newcommand{\tspace}{\allowbreak\ }
+\NewDocumentCommand\given{s}{
+    \IfBooleanTF{#1}{
+        \,\middle|\,
+    }{
+        \,|\,
+    }
+}
+\newcommand{\givenn}{\,\middle|\,}
+\newcommand{\skipline}{\mbox{}}
+\newcommand{\of}{\circ}
+
+\renewcommand{\quote}{\list{}{\rightmargin=\leftmargin\topsep=0pt}\item\relax}
+\newenvironment{sub}{\begin{quote}}{\mbox{}\end{quote}}
+
+% common paired delimiters
+\DeclarePairedDelimiter\set{\{}{\}}
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+\DeclarePairedDelimiter\card{\lvert}{\rvert}
+\DeclarePairedDelimiter\norm{\lVert}{\rVert}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+
+% word commands
+\newcommand{\createwordcommand}[2]{
+    \NewDocumentCommand{#1}{s s s}{\IfBooleanTF{##1}{
+            \IfBooleanTF{##2}{
+                \IfBooleanTF{##3}
+                {#2}{#2\tspace}
+            }{\tspace#2}
+        }{\tspace#2\tspace}
+    }
+}
+\createwordcommand{\tand}{\text{and}}
+\createwordcommand{\tor}{\text{or}}
+\createwordcommand{\tif}{\text{if}}
+\createwordcommand{\tforall}{\text{for}\tspace\text{all}}
+\createwordcommand{\tforsome}{\text{for}\tspace\text{some}}
+\createwordcommand{\tiff}{\text{if}\tspace\text{and}\tspace\text{only}\tspace\text{if}}
+\createwordcommand{\tsuchthat}{\text{such}\tspace\text{that}}
+\createwordcommand{\totherwise}{\text{otherwise}}
+\createwordcommand{\twith}{\text{with}}
+
+
+
+% images
+\newcommand\smallimage[1]{
+    \begin{center}
+    \includegraphics[width=0.2\textwidth]{images/#1}
+    \end{center}
+}
+
+\newcommand\image[1]{
+    \begin{center}
+    \includegraphics[width=0.33\textwidth]{images/#1}
+    \end{center}
+}
+
+\newcommand\wideimage[1]{
+    \begin{center}
+    \includegraphics[width=\textwidth]{images/#1}
+    \end{center}
+}

@@ -1,0 +1,416 @@
+\documentclass[12pt]{book} % non stream mode
+%\documentclass[17pt]{extbook} % stream mode
+\usepackage[utf8]{inputenc}
+
+\usepackage{import}
+
+\import{./template/}{defaults}
+\import{./template/}{common}
+\import{./template/}{notes}
+
+\newcommand{\T}{\mathcal T}
+\newcommand{\B}{\mathcal B}
+\DeclareMathOperator{\Int}{Int}
+\DeclareMathOperator{\Cl}{Cl}
+
+\title{Geometry and Topology}
+\author{Diego Lopez and Gabriela Moisescu-Pareja}
+\date{Fall 2020}
+
+\begin{document}
+
+\maketitle
+
+\chapter{Topological Spaces}
+
+\begin{definition}
+A \emph{topology} on a set \( X \) is a collection of subsets of \( X \) satisfying
+\begin{enumerate}
+\item \( \emptyset \in \T \) and \( X \in T \);
+\item if \( U_\alpha \in \T \) for all \( U_\alpha \in A \) for some index set \( A \), then \[ \bigcup_{\alpha \in A} U_\alpha \in \T; \]
+\item if \( U_1, U_2 \in \T \) then \( U_1 \cap U_2 \in \T \).
+\end{enumerate}
+A set \( U \in \T \) called an \emph{open set}.
+The pair \( (X, \T) \) is called a topological space.
+\end{definition}
+
+\begin{example} \skipline
+\begin{itemize}
+\item The \emph{discrete topology} on a set \( X \) is its powerset, \ie \( \T = \mathcal P(X) \).
+\item The \emph{trivial topology} on a set \( X \) is \( \T = \set{\emptyset, X} \).
+\end{itemize}
+\end{example}
+
+\begin{definition}
+A \emph{closed} subset is the complement of an open subset.
+\end{definition}
+
+\begin{definition}
+A \emph{finite topological space} is a topological space \( X \) with \( \card X \leq \infty \).
+\end{definition}
+
+\begin{definition}
+Let \( \T_1, \T_2 \) be two topologies on the same set \( X \).
+Then, 
+\begin{itemize}
+\item \( T_1 \) is said to be \emph{finer} than \( T_2 \) if \( T_1 \supset T_2 \); and
+\item \( T_1 \) is said to be \emph{coarser} than \( T_2 \) if \( T_1 \subset T_2 \).
+\end{itemize}
+\end{definition}
+
+\begin{note}
+Two topologies may not be comparable.
+That is, there can be topologies \( T_1, T_2 \) on the same set \( X \) such that neither one is coarser nor finer than the other.
+\end{note}
+
+\begin{definition}
+A collection \( \B \) of subsets of \( X \) is said to be a \emph{basis} if
+\begin{enumerate}
+\item the union of all sets is \( X \), that is \[ X = \bigcup_{B \in \B} B; \]
+\item for all \( B_1, B_2 \in \B \) and each \( x \in B_1 \cap B_2 \) we have that there is some \( B_2 \in \B \) such that \( x \in B_3 \subset B_1 \cap B_2 \).
+\end{enumerate}
+\end{definition}
+
+\begin{note}
+The condition (2) is implied by the following stronger condition
+\begin{enumerate}
+\item[\( 2'. \)] for all \( B_1, B_2 \in \B \) we have that \( B_1 \cap B_2 \in \B \).
+\end{enumerate}
+\end{note}
+
+\begin{example}
+The open rectangles in \( \R^2 \) satisfy condition \( (2') \).
+\end{example}
+
+\begin{definition}
+A basis \( \B \) is said to be a \emph{basis for the topology \( \T \)} if \( \T \) equals the collection of unions of subcollections of \( \mathcal B \), \ie 
+\[ \T \coloneqq \set*{ \bigcup_{B \in \mathcal A} B \given* \mathcal A \subset B}. \]
+Equivalently, for every \( x \in U \in \T \) there is some \( B \in \B \) such that \( x \in B \subset U \).
+In either case, we say that \( \B \) \emph{generates} \( \T \).
+\end{definition}
+
+\begin{example}
+A basis for \( \R^n \) are the open balls
+\[ B(x, r) \coloneqq \set{y \in \R^n \given d(x, y) < r } \]
+for all \( r > 0 \) and all \( x \in \R^n \).
+Another basis are the open rectangles.
+\end{example}
+
+\begin{definition}
+The \emph{profinitie topology} on a group \( G \) is the topology whose basis consists of left cosets of finite index subgroups
+\[ \B = \set{gH \given [G : H] < \infty,\ g \in H}. \]
+\end{definition}
+
+\begin{note}
+The profinite topology is a topology since
+\begin{enumerate}
+\item if \( [G : H_1] < \infty \) and \( [G : H_2] < \infty \) then \( [G : H_1 \cap H_2] < \infty \);
+\item \( g_1 H_2 \cap g_2 H_2 = g_3 (H_1 \cap H_2) \) for some \( g_3 \in G \).
+\end{enumerate}
+That is, condition (1) for bases holds since \( [G : G] = 1 < \infty \) and condition (2) holds by note (2).
+\end{note}
+
+\begin{definition}
+A topological space \( (X, \T) \) is said to be \emph{Hausdorff} if for every \( p, q \in X \) with \( p \neq q \) we have that there exist \( U_p, U_q \in \T \) such that \( p \in U_p \), \( q \in U_q \) and \( U_p \cap U_q = \emptyset \).
+\end{definition}
+
+\begin{definition}
+If \( U \in \T \) and \( x \in U \), we say that \( U \) is a \emph{neighborhood} of \( x \).
+\end{definition}
+
+\begin{note}
+When is the profinite topology on \( G \) Hausdorff?
+What algebraic property much \( G \) have?
+This happens exactly when \( G \) is \emph{residually finite}, that is for all \( g \neq 1_G \), there exists a finite quotient \( G \to \overline G \) such that \( \bar g \neq 1_{\overline G} \).
+For example, \( \Z^n \) is residually finite.
+\end{note}
+
+\begin{definition}
+Let \( (X, \T_X) \) be a topological space.
+Let \( Y \subset X \) be a subset.
+The \emph{subspace topology} \( \T_Y \) on \( Y \) is given by
+\[ \T_Y \coloneqq \set{U \cap Y \given U \in \T_X}. \]
+\end{definition}
+
+\begin{note}
+Open sets of \( Y \) might not be open in \( X \).
+For example, consider \( Y = (0, 1] \subset \R \).
+On the other hand, if \( Y \subset X \) is open, then every open set of \( \T_Y \) is open in \( \T_X \).
+\end{note}
+
+\begin{definition}
+Let \( (X, \T_1) \) and \( (X_2, \T_2) \) be topological spaces.
+The \emph{product topology} on \( X_1 \cross X_2 \) is generated by the basis
+\[ \B = \set{U_1 \cross U_2 \given U_1 \in \T_1,\ U_2 \in \T_2}. \]
+\end{definition}
+
+\begin{note}
+The product topology can be similarly defined for finite products.
+\end{note}
+
+\begin{definition}
+Let \( \mathcal S \) be a collection of subsets of \( X \).
+Let \[ \B_\mathcal S = \set*{\bigcap_{i \in F} S_i \given* \card F < \infty,\ S_i \in \mathcal S \text{ for all \( i \in F \)}}. \]
+Regard \( X \) as an element of \( \B_\mathcal S \) with \( F = \emptyset \).
+Then, \( \B_\mathcal S \) is a basis since \( X \in \B_\mathcal S \) and condition \( (2') \) is satisfied.
+We call \( \T_\mathcal S = \T_{\B_\mathcal S} \) the \emph{topology generated by \( \mathcal S \)} and \( \mathcal S \) a subbasis for \( \T_\mathcal S \).
+\end{definition}
+
+\begin{note}
+The topololy \( \T_\mathcal S \) is the coarsest topology containing \( \mathcal S \).
+\end{note}
+
+\begin{example}
+The product topology \( X_1 \cross X_2 \) has subbasis
+\[ \set{U_1 \cross X_2 \given U_1 \in \T_1} \cup \set{X_1 \cross U_2 \given U_2 \in \T_2}. \]
+\end{example}
+
+\begin{definition}
+Let \( (X, <) \) be a set with an \emph{order relation}.
+That is, a relation which satisfies
+\begin{enumerate}
+\item non-reflexivity, \ie \( x < x \) does not hold for any \( x \in X \);
+\item comparability, \ie for every \( x, y \in X \) we have exactly one of \( x = y \), \( x < y \) or \( y < x \).
+\item transitivity, \ie if \( x < y \) and \( y < z \) then \( x < z \).
+\end{enumerate}
+The \emph{order topology} \( T_< \) s generated by the subbasis
+\[ \mathcal S = \set{(x, +\infty) \given x \in X} \cup \set{(-\infty, x) \given x \in X} \]
+where
+\begin{align*}
+(x, +\infty) &\coloneqq \set{y \in X \given x < y} \\
+(-\infty, x) &\coloneqq \set{y \in X \given y < x}.
+\end{align*}
+\end{definition}
+
+\begin{remark}
+We may be tempted to try to use the subbasis
+\[ \mathcal S = \set{(a, b) \given a, b \in X}. \]
+However, we would find that it has some problems.
+Indeed, in the case where \( X = \set{x, y} \) with \( x < y \), then the set \( (x, y) \) is the empty set.
+However, the order topology on \( X \) is the discrete topology, not the trivial topology.
+\end{remark}
+
+\begin{example}
+The set \( (\R, <) \) is a motivating ordered set.
+The order topology is the same as the open ball topology.
+Indeed, each open ball \( (a, b) = (-\infty, b) \cap (a, +\infty) \).
+\end{example}
+
+\begin{definition}
+Let \( (X_1, <_1) \) and \( (X_2, <_2) \) be ordered sets.
+We order the product \( (X_1 \cross X_2) \) using the \emph{lexicographic ordering}.
+That is, \( (p_1, p_2) < (q_1, q_2) \) if \( p_1 < q_1 \) or \( p_1 = q_1 \) and \( p_2 < q_2 \).
+\end{definition}
+
+\begin{example}
+Given \( \R \cross \R \), the lexicographic order topology.
+This topology is finer than the usual topology.
+All open vertical segments are open subsets.
+So, all open ball (or open rectangles) in \( (\R^2, \T) \) are open in \( (\R^2, \T_<) \).
+However, every non-vertical line segment \( L \) in \( (\R^2, \T_<) \) is discrete using the subspace topology.
+This is very different from the subpace topology obtained from the standard topology \( \T_{\mathbb E} \).
+\end{example}
+
+\begin{definition}
+Let \( A \leq X \) where \( X \) is a topological space.
+The \emph{interior} of \( A \) is the union of open sets of \( X \) lying in \( A \).
+The \emph{closure} of \( A \) is the intersection of closed sets containing \( A \).
+Thus, we have
+\[ \Int(A) \subset A \subset \Cl(A). \]
+\end{definition}
+
+\begin{example}
+We have
+\[ \Int \left ( \set*{\frac 1 n}_{n \in \N} \cup (1, 2] \right ) = (1, 2) \]
+and
+\[ \Cl \left ( \set*{\frac 1 n}_{n \in \N} \cup (1, 2] \right ) = \set 0 \cup \set*{\frac 1 n}_{n \in \N} \cup [1, 2]. \]
+\end{example}
+
+\begin{example}
+Consider the following.
+\wideimage{closureInterior.png}
+Let \( A \subset \R^2 \) denote the set in the middle.
+Then, the set on the left is the interior of \( A \) and the set of the right is the closure of \( A \).
+\end{example}
+
+\begin{remark}
+Let \( A \subset Y \subset X \) be topological spaces with the subpace topology on \( Y \).
+Then, there is a possibility that
+\[ \Cl_Y(A) \subsetneq \Cl_X(A). \]
+Indeed, if \( A = Y \), then \( \Cl_Y(Y) = Y \), whereas \( \Cl_X(Y) \) may include points not in \( Y \).
+\end{remark}
+
+\begin{theorem}
+Let \( X \) be a topological space and \( Y \subset X \) be given the subspace topology.
+Then, for all \( A \subset Y \) we have
+\[ \Cl_Y(A) = \Cl_X(A) \cap Y. \]
+\end{theorem}
+
+\begin{theorem}
+Let \( A \subset X \) be a subset of a topological space.
+Then, \( x \in \Cl(A) \) if and only if every neighborhood of \( x \) intersects \( A \).
+\end{theorem}
+
+\begin{proof}
+We prove by contraposition.
+We show that if \( x \not \in A \) then there is some neighborhood of \( x \) which is disjoint from \( A \).
+Indeed, if \( x \not \in A \) then \( x \in X - \Cl(A) \) is open and disjoint from \( A \).
+On the other hand, we show that if there is some neighborhood that is disjoint from \( A \), then \( x \) is not in the closure of \( A \).
+Indeed, if \( U \) is a neighborhood of \( x \) with \( A \cap U = \emptyset \), then \( A \) is contained in the closed subset \( X - U \). So, \( \Cl(A) \subset X - U \) and so \( x \not \in \Cl(A) \).
+\end{proof}
+
+\begin{definition}
+A \emph{limit point} \( x \) of a subset \( A \subset X \) is a point for which every neighborhood of \( x \) intersects \( A - \set x \).
+We denote the set of limits points of \( A \) by \( A' \).
+\end{definition}
+
+\begin{example}
+Let \( A \) denote the following subset of \( \R^2 \).
+\image{limitPoints.png}
+Then, the set \( A' \) is the whole disc without the isolated point on the right.
+\end{example}
+
+\begin{example}
+Take \( \Q \subset \R \).
+Then, \( \Q' = \R \).
+\end{example}
+
+\begin{theorem}
+Let \( X \) be a topological space.
+Let \( A \subset X \).
+Then, \( A \) is closed if and only if \( A' \subset A \).
+\end{theorem}
+
+\begin{example}
+Consider the following finite topology.
+\image{closureLimit.png}
+Then, we have
+\begin{align*}
+\Cl(\set 1) &= \set{1, 2}, & \set 1' &= \set 2, \\
+\Cl(\set 2) &= \set 2, & \set 2' &= \emptyset, \\
+\Cl(\set 3) &= X, & \set 3' &= \set{1, 2}.
+\end{align*}
+\end{example}
+
+\begin{example}
+The trivial topology on \( X \) is not Hausdorff when \( \abs X > 1 \).
+\end{example}
+
+\begin{definition}
+Let \( X \) be a topological space.
+Then, \( X \) is said to be \( T_1 \) is singletons are closed.
+\end{definition}
+
+\begin{lemma}
+Let \( X \) be a topological space.
+If \( X \) is Hausdorff then \( X \) is \( T_1 \).
+\end{lemma}
+
+\begin{proof}
+For \( p \neq q \), there exist disjoint neighborhoods \( U_p, U_q \) so
+\[ \set p = \bigcap_{q \neq p} (X - U_q). \]
+\end{proof}
+
+\begin{corollary}
+If \( X \) is a Hausdorff topological space, then finite subset are closed.
+\end{corollary}
+
+\begin{corollary}
+If \( X \) is a finite Hausdorff topological space, then \( X \) has the discrete topology.
+\end{corollary}
+
+\begin{note}
+Hausdorff and \( T_1 \) are the same for finite topological space.
+They both result in the topology being discrete.
+\end{note}
+
+\begin{example}
+The following finite topological spaces are not Hausdorff.
+\wideimage{nonHausdorff.png}
+\end{example}
+
+\begin{example}[Line with two origins]
+Consider the real line with two origins.
+\image{lineWithTwoOrigins.png}
+The space is given by
+\[ X = (-\infty, 0) \sqcup \set{0_1, 0_2} \sqcup (0, +\infty) \]
+with basis
+\begin{align*}
+\B &= \set{(a, b) \given a < b < 0 \tor 0 < a < b} \\
+&\qquad \cup \set{(a, 0) \cup \set{0_1} \cup (0, b) \given a < 0 < b} \\
+&\qquad \cup \set{(a, 0) \cup \set{0_2} \cup (0, b) \given a < 0 < b}
+\end{align*}
+\end{example}
+
+\begin{theorem}
+The order topology is Hausdorff.
+\end{theorem}
+
+\begin{proof}
+We prove by cases.
+If there is some \( s \in X \) such that \( p < s < q \) then \( p \in (-\infty, s) \) and \( q \in (s, +\infty) \) are disjoint neighborhoods of \( p, q \).
+Otherwise, \( p \in (-\infty, q) \) and \( q \in (p, +\infty) \) are disjoint neighborhoods of \( p, q \).
+\end{proof}
+
+\begin{theorem}
+If \( X \) is Hausdorff and \( Y \subset X \) is a subspace, then \( Y \) is Hausdorff.
+\end{theorem}
+
+\begin{proof}
+If \( p \neq q \in Y \) then there exists disjoint neighborhoods \( U_p, U_q \) in \( X \) containing \( p \) and \( q \) respectively.
+Then, we have disjoing neighborhoods \( U_p \cap Y \) and \( U_q \cap Y \) in \( Y \).
+\end{proof}
+
+\begin{theorem}
+If \( A, B \) is Hausdorff, then \( A \cross B \) is Hausdorff.
+\end{theorem}
+
+\begin{proof}
+Let \( (a_1, b-1) \neq (a_2, b_2) \).
+We prove by cases.
+If \( a_1 \neq a_2 \) then we have \( U_1, U_2 \) in \( A \) which separate \( a_1 \) and \( a_2 \).
+Then \( U_1 \cross B \) and \( U_2 \cross B \) separate \( (a_1, b_1) \) and \( (a_2, b_2) \).
+If \( b_1 \neq b_2 \) then we have \( V_1, V_2 \) in \( B \) which separate \( b_1 \) and \( b_2 \).
+Then, \( A \cross V_1 \) and \( A \cross V_2 \) separate \( (a_1, b_1) \) and \( (a_2, b_2) \).
+\end{proof}
+
+\begin{definition}
+The \emph{Finite Complement Topology} (FTC) on a set \( X \) has that a set \( U \) is open if and only if \( \card{X - U} < \infty \).
+\end{definition}
+
+\begin{remark}
+The FCT is generated by the subbasis
+\[ \mathcal S = \set{X -\set x}_{x \in X}. \]
+Thus, FCT is the coarsest \( T_1 \) topology on \( X \).
+\end{remark}
+
+\begin{example}
+If \( \card X < \infty \), then the FCT is discrete.
+If \( \card X = \infty \), then the FCT is \( T_1 \) but not Hausdorff, since when \( \card{F_1} < \infty \) and \( \card{F_2} < \infty \), we have
+\[ ( X - F_1) \cap (X - F_2) = (X - (F_1 \cup F_2)) \neq \emptyset. \]
+\end{example}
+
+\begin{definition}
+A sequence \( (x_i)_{i \in \N} \) in \( X \) is said to \emph{converge to a point \( p \in X \)} if for each neighborhood \( U \) of \( p \), there is some \( N_U \in \N \) such that \( x_i \in U \) whenever \( i \geq N_U \).
+\end{definition}
+
+\begin{example}
+Consider the following finite topological space.
+\image{finiteSpaceSequence.png}
+Then, the sequence
+\[ a, b, a, b, a, b, \ldots \]
+converges to \( a \), \( b \), \( c \) and \( d \), but not to \( e \).
+\end{example}
+
+\begin{example}
+Let \( X \) be a topological space with the FCT.
+Let \( (x_i)_{i \in \N} \) be a sequence such that \( x_i \neq x_j \) for \( i \neq j \).
+Then for each \( p \in X \), the sequence \( (x_i)_{i \in \N} \) converges to \( p \).
+To see why, consider a neighbohood of \( p \), \( X - F \) for some \( F \subset X \) with \( \card F < \infty \).
+For \( f \in F \), define
+\[ N_F = \begin{cases} 0 &\tif** f \not \in \set{x_i}_{i\in\N} \\ m &\tif** f = x_m. \end{cases} \]
+Let
+\[ N_F = \max_{f \in F} N_f + 1. \]
+Then, \( x_i \not \in F \) for \( i \geq N_f \) so \( x_i \in X - F \) for all \( i \geq N_F \).
+\end{example}
+\end{document}

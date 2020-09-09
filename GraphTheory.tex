@@ -1,0 +1,96 @@
+\documentclass[12pt]{book}
+\usepackage[utf8]{inputenc}
+
+\usepackage{import}
+
+\import{./template/}{defaults}
+\import{./template/}{common}
+\import{./template/}{notes}
+
+
+\title{Graph Theory}
+\author{Diego Lopez and Gabriela Moisescu-Pareja}
+\date{Fall 2020}
+
+\begin{document}
+
+\maketitle
+
+\chapter{Definitions}
+
+\begin{definition}
+A \emph{graph} \( G \) is a pair of sets
+\begin{enumerate}
+\item a \emph{vertex set} \( V(G) \) consisting of vertices; and
+\item an \emph{edge set} \( E(G) \) consisting of edges such that each edge has one or two vertices at its ends.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}
+An edge is said to \emph{join} its ends.
+\end{definition}
+
+\begin{definition}
+An edge with only one vertex is called a \emph{loop}.
+\end{definition}
+
+\begin{definition}
+Two edges joining the same vertices are said to be \emph{parallel}.
+\end{definition}
+
+\begin{definition}
+Two vertices are said to be \emph{adjacent} if they are joined by an edge.
+\end{definition}
+
+\begin{proposition}
+Consider the following graph.
+\image{bridges.png}
+Then, there does not exist a path on this graph which traverses every edge exactly once.
+\end{proposition}
+
+\begin{proof}
+Assume for the purpose of contradiction that were was a path.
+Then this path would have a starting vertex and an ending vertex.
+Consider the two vertices which are neither start nor end vertices.
+Then, since these neither start nor end the path, each time that this vertex is visited it must also be exited from a different edge.
+This means that there would be an even number of edges containing this vertex.
+However, in the case of our graph, all edges have an odd number of vertices, and so this cannot happen.
+\end{proof}
+
+\begin{proposition}
+In a graph with 6 nodes, there are either three pairwise adjacent vertices or three pairwise non-adjacent vertices.
+\end{proposition}
+
+\begin{proof}[Sketch]
+Number the edges 1 through 6.
+This can be shown by a case analysis on how many edges contain the edge 1.
+That is, there are either at least three vertices adjacent to 1 or three vertices non-adjacent to 1.
+Then analysing each case can show that no matter what, there will always be either three edges which are pairwise adjacent or three edges which are pairwise non-adjacent.
+\end{proof}
+
+\begin{definition}
+Let \( R(k) \) denote the minimum integer such that in every graph with \( \card{V(G)} = R(k) \), there are either \( k \) pairwise adjacent vertices or \( k \) pairwise non-adjacent vertices.
+\end{definition}
+
+\begin{note}
+We showed that \( R(3) \leq 6 \).
+We can show that \( R(3) = 6 \) by constructing a graph with 5 vertices which does not contain 3 pairwise adjacent vertices nor 3 pairwise non-adjacent vertices.
+\end{note}
+
+\begin{definition}
+The \emph{null graph} has no vertices and no edges.
+\end{definition}
+
+\begin{note}
+What is the maximum number of edges in a graph with \( n \) vertices?
+It is infinity, as we can have an arbitrary number of parallel edges.
+What about simple graphs?
+In this case, there are \( n \) choices for the first end, and \( n-1 \) choices for the second end.
+However, every edge is counted twice, we te have the the total number of edges is
+\[ \frac{n (n-1)}2 = \binom n 2. \]
+\end{note}
+
+\begin{definition}
+The simple graph with every pair of vertices adjacent is called \emph{complete}. The complete graph with \( n \) vertices is called \( K_n \).
+\end{definition}
+\end{document}
